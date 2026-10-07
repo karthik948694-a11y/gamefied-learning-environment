@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 230 25% 7%;
+    --foreground: 210 40% 92%;
+
+    --card: 230 20% 12%;
+    --card-foreground: 210 40% 92%;
+
+    --popover: 230 20% 12%;
+    --popover-foreground: 210 40% 92%;
+
+    --primary: 190 100% 50%;
+    --primary-foreground: 230 25% 7%;
+
+    --secondary: 230 15% 18%;
+    --secondary-foreground: 210 40% 92%;
+
+    --muted: 230 15% 15%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 45 100% 55%;
+    --accent-foreground: 230 25% 7%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 230 15% 20%;
+    --input: 230 15% 20%;
+    --ring: 190 100% 50%;
+
+    --radius: 0.75rem;
+
+    --xp: 145 70% 45%;
+    --xp-foreground: 230 25% 7%;
+
+    --coin: 45 100% 55%;
+    --enemy: 0 75% 55%;
+    --streak: 25 100% 55%;
+
+    --glow-primary: 0 0 20px hsl(190 100% 50% / 0.4);
+    --glow-accent: 0 0 20px hsl(45 100% 55% / 0.4);
+    --glow-xp: 0 0 20px hsl(145 70% 45% / 0.4);
+    --glow-enemy: 0 0 20px hsl(0 75% 55% / 0.4);
+    --glow-streak: 0 0 20px hsl(25 100% 55% / 0.4);
+
+    --sidebar-background: 230 20% 10%;
+    --sidebar-foreground: 210 40% 92%;
+    --sidebar-primary: 190 100% 50%;
+    --sidebar-primary-foreground: 230 25% 7%;
+    --sidebar-accent: 230 15% 18%;
+    --sidebar-accent-foreground: 210 40% 92%;
+    --sidebar-border: 230 15% 20%;
+    --sidebar-ring: 190 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .game-card {
+    @apply bg-card border border-border rounded-lg p-4 relative overflow-hidden;
+    box-shadow: 0 4px 20px hsl(230 25% 0% / 0.5);
+  }
+
+  .game-card::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300 rounded-lg pointer-events-none;
+    box-shadow: inset 0 0 30px hsl(190 100% 50% / 0.1);
+  }
+
+  .game-card:hover::before {
+    @apply opacity-100;
+  }
+
+  .glow-primary {
+    box-shadow: var(--glow-primary);
+  }
+
+  .glow-accent {
+    box-shadow: var(--glow-accent);
+  }
+
+  .glow-xp {
+    box-shadow: var(--glow-xp);
+  }
+
+  .glow-enemy {
+    box-shadow: var(--glow-enemy);
+  }
+
+  .glow-streak {
+    box-shadow: var(--glow-streak);
+  }
+
+  .text-glow-primary {
+    text-shadow: 0 0 10px hsl(190 100% 50% / 0.6);
+  }
+
+  .text-glow-accent {
+    text-shadow: 0 0 10px hsl(45 100% 55% / 0.6);
+  }
+
+  .text-glow-xp {
+    text-shadow: 0 0 10px hsl(145 70% 45% / 0.6);
+  }
+
+  .progress-bar-fill {
+    @apply h-full rounded-full transition-all duration-700 ease-out relative overflow-hidden;
+  }
+
+  .progress-bar-fill::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.2), transparent);
+    animation: shimmer 2s infinite;
+  }
+
+  .quest-node {
+    @apply w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300 cursor-pointer;
+  }
+
+  .quest-node-completed {
+    @apply bg-xp border-xp glow-xp;
+  }
+
+  .quest-node-current {
+    @apply bg-primary/20 border-primary glow-primary animate-pulse;
+  }
+
+  .quest-node-locked {
+    @apply bg-muted border-border opacity-50;
+  }
+}
+
+@layer utilities {
+  .bg-xp {
+    background-color: hsl(var(--xp));
+  }
+  .text-xp {
+    color: hsl(var(--xp));
+  }
+  .border-xp {
+    border-color: hsl(var(--xp));
+  }
+  .bg-coin {
+    background-color: hsl(var(--coin));
+  }
+  .text-coin {
+    color: hsl(var(--coin));
+  }
+  .bg-enemy {
+    background-color: hsl(var(--enemy));
+  }
+  .text-enemy {
+    color: hsl(var(--enemy));
+  }
+  .bg-streak {
+    background-color: hsl(var(--streak));
+  }
+  .text-streak {
+    color: hsl(var(--streak));
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fire-flicker {
+  0%, 100% { transform: scale(1) rotate(-2deg); opacity: 1; }
+  25% { transform: scale(1.1) rotate(2deg); opacity: 0.9; }
+  50% { transform: scale(0.95) rotate(-1deg); opacity: 1; }
+  75% { transform: scale(1.05) rotate(1deg); opacity: 0.85; }
+}
+
+@keyframes enemy-idle {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.02); }
+}
+
+@keyframes coin-spin {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-fire {
+  animation: fire-flicker 0.5s ease-in-out infinite;
+}
+
+.animate-enemy-idle {
+  animation: enemy-idle 2s ease-in-out infinite;
+}
+
+.animate-coin-spin {
+  animation: coin-spin 2s linear infinite;
+}
+
+/* ---- Kids Zone theme: soft, low-glare colors that are gentle on children's eyes ---- */
+.kids-theme {
+  --background: 40 40% 97%;
+  --foreground: 222 30% 25%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222 30% 25%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 30% 25%;
+
+  --primary: 188 55% 45%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 40 35% 91%;
+  --secondary-foreground: 222 30% 25%;
+
+  --muted: 40 30% 93%;
+  --muted-foreground: 222 12% 45%;
+
+  --accent: 12 70% 68%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 4 60% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 38 25% 86%;
+  --input: 38 25% 86%;
+  --ring: 188 55% 45%;
+  --radius: 1.5rem;
+
+  --coin: 40 85% 55%;
+  --xp: 150 45% 45%;
+  --enemy: 4 60% 60%;
+  --streak: 25 80% 60%;
+}
+
+@layer components {
+  .kid-tile {
+    @apply bg-card border-2 border-border transition-all duration-300;
+    box-shadow: 0 8px 20px hsl(222 30% 25% / 0.08);
+  }
+
+  .kid-tile:hover {
+    box-shadow: 0 12px 26px hsl(222 30% 25% / 0.14);
+  }
+
+  .kid-tile-sky { background-color: hsl(198 65% 94%); border-color: hsl(198 55% 84%); }
+  .kid-tile-peach { background-color: hsl(20 80% 94%); border-color: hsl(20 65% 85%); }
+  .kid-tile-mint { background-color: hsl(150 45% 93%); border-color: hsl(150 40% 82%); }
+  .kid-tile-lilac { background-color: hsl(265 50% 95%); border-color: hsl(265 40% 86%); }
+  .kid-tile-sun { background-color: hsl(45 80% 93%); border-color: hsl(45 70% 82%); }
+
+  .kid-btn {
+    @apply bg-card text-foreground font-display font-bold text-lg rounded-2xl px-5 py-4 border-2 border-border transition-colors;
+    box-shadow: 0 4px 0 hsl(38 25% 82%);
+  }
+
+  .kid-btn:hover {
+    @apply border-primary;
+  }
+
+  .kid-btn-correct {
+    @apply bg-xp text-foreground border-xp;
+  }
+
+  .kid-btn-wrong {
+    @apply bg-destructive/20 border-destructive;
+  }
+}
